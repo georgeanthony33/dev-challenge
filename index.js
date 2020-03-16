@@ -2,8 +2,8 @@ const express = require('express')
 const mongoose = require('mongoose')
 const app = express()
 
-const router = require('./config/router')
 const { port, dbURI } = require('./config/environment')
+const router = require('./config/router')
 
 mongoose.connect(dbURI, { useNewUrlParser: true, useUnifiedTopology: true }, (err) => {
   if (err) return console.log(err)

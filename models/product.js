@@ -6,4 +6,6 @@ const productSchema = new mongoose.Schema({
   price: { type: Number, required: true }
 })
 
+productSchema.plugin(require('mongoose-unique-validator'))
+
 module.exports = mongoose.model('Product', productSchema)
