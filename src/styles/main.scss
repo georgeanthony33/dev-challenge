@@ -1,0 +1,30 @@
+body {
+  margin: 0;
+  padding: 0;
+  background-color: #1b1c1d;
+  color: white;
+  font-family: 'Varela Round', sans-serif;
+}
+
+.frontpage-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  width: 100vw;
+}
+
+.title-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: relative;
+  width: 600px;
+}
+
+h1 {
+  letter-spacing: 1px;
+  font-size: 60px;
+  text-align: center;
+  color: white;
+}
