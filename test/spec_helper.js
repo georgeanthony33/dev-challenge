@@ -1,5 +1,4 @@
 process.env.NODE_ENV = 'test'
-// global.Promise = require('bluebird')
 
 const chai = require('chai')
 global.expect = chai.expect
