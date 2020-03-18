@@ -86,7 +86,6 @@ class App extends React.Component {
   }
 
   render() {
-    console.log(this.state.filterSelections.maxPrice)
     if (!this.state.productData) return null
     return (
       <div className="frontpage-container">
@@ -94,72 +93,82 @@ class App extends React.Component {
           <h1>The Wongle People</h1>
           <h2>Choose your favourite wongle from your favourite supplier!</h2>
         </div>
-        <div className="inputs-container">
-          <h2>Product pricing</h2>
-          <form>
-            <label htmlFor="selSupplier">Supplier</label>
-            <select
-              id="selSupplier"
-              name="supplier"
-              className="suppliers"
-              onChange={this.handleChange}
-            >
-              <option value="All">All</option>
-              {this.state.suppliersDropdown.map(supplier => (
-                <option key={supplier} value={supplier}>{supplier}</option>
-              ))}
-            </select>
-            <label htmlFor="selProduct">Product</label>
-            <select
-              id="selProduct"
-              name="product"
-              className="products"
-              onChange={this.handleChange}
-            >
-              <option value="All">All</option>
-              {this.state.productsDropdown.map(product => (
-                <option key={product} value={product}>{product}</option>
-              ))}
-            </select>
-            <label htmlFor="selMinPrice">Min Price</label>
-            <input
-              id="selMinPrice"
-              className="input"
-              name="minPrice"
-              type="number"
-              onBlur={this.handleChange}
-            />
-            <label htmlFor="selMaxPrice">Max Price</label>
-            <input
-              id="selMaxPrice"
-              className="input"
-              name="maxPrice"
-              type="number"
-              onBlur={this.handleChange}
-            />
-            <button onClick={this.handleSubmit}>Search</button>
-          </form>
-        </div>
-        <div className="products-container">
-          <h2>Product details</h2>
-          <table>
-            <thead>
-              <tr>
-                <th>Supplier</th>
-                <th>Product</th>
-                <th>Price</th>
-              </tr>
-            </thead>
-            <tbody>
-              {this.state.filteredData.map(product => (
-                <tr key={product._id}>
-                  <td>{product.supplier.name}</td>
-                  <td>{product.name}</td>
-                  <td>{product.price}</td>
+        <div className="products-outer-container">
+          <div className="inputs-container">
+            <h2>Product pricing</h2>
+            <form>
+              <div className="filter-input">
+                <label htmlFor="selSupplier">Supplier</label>
+                <select
+                  id="selSupplier"
+                  name="supplier"
+                  className="suppliers"
+                  onChange={this.handleChange}
+                >
+                  <option value="All">All</option>
+                  {this.state.suppliersDropdown.map(supplier => (
+                    <option key={supplier} value={supplier}>{supplier}</option>
+                  ))}
+                </select>
+              </div>
+              <div className="filter-input">
+                <label htmlFor="selProduct">Product</label>
+                <select
+                  id="selProduct"
+                  name="product"
+                  className="products"
+                  onChange={this.handleChange}
+                >
+                  <option value="All">All</option>
+                  {this.state.productsDropdown.map(product => (
+                    <option key={product} value={product}>{product}</option>
+                  ))}
+                </select>
+              </div>
+              <div className="filter-input">
+                <label htmlFor="selMinPrice">Min Price (£)</label>
+                <input
+                  id="selMinPrice"
+                  className="input"
+                  name="minPrice"
+                  type="number"
+                  onBlur={this.handleChange}
+                />
+              </div>
+              <div className="filter-input">
+                <label htmlFor="selMaxPrice">Max Price (£)</label>
+                <input
+                  id="selMaxPrice"
+                  className="input"
+                  name="maxPrice"
+                  type="number"
+                  onBlur={this.handleChange}
+                />
+              </div>
+              <button onClick={this.handleSubmit}>Search</button>
+            </form>
+          </div>
+          <div className="product-listing-container">
+            <h2>Product details</h2>
+            <table>
+              <thead>
+                <tr>
+                  <th>Supplier</th>
+                  <th>Product</th>
+                  <th>Price (£)</th>
                 </tr>
-              ))}
-            </tbody>
-          </table>
+              </thead>
+              <tbody>
+                {this.state.filteredData.map(product => (
+                  <tr key={product._id}>
+                    <td>{product.supplier.name}</td>
+                    <td>{product.name}</td>
+                    <td>{product.price}</td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
         </div>
       </div>
     )
