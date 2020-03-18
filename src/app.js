@@ -95,7 +95,7 @@ class App extends React.Component {
         </div>
         <div className="products-outer-container">
           <div className="inputs-container">
-            <h2>Product pricing</h2>
+            <h2>Product Search</h2>
             <form>
               <div className="filter-input">
                 <label htmlFor="selSupplier">Supplier</label>
@@ -149,7 +149,7 @@ class App extends React.Component {
             </form>
           </div>
           <div className="product-listing-container">
-            <h2>Product details</h2>
+            <h2>Product Listing</h2>
             <table>
               <thead>
                 <tr>
