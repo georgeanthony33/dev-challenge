@@ -85,40 +85,77 @@ class App extends React.Component {
       const productsDropdown = Array.from(new Set(filteredDataBySupplier.map(product => (product.name))))
       this.setState({ productsDropdown })
     } else if (filterName === 'minPrice' || filterName === 'maxPrice') {
-      const filteredDataBySupplier = filteredDataByPrice.filter(product => (
-        product.supplier.name === this.state.filterSelections.supplier || this.state.filterSelections.supplier === 'All'
-      ))
-      const suppliersDropdown = Array.from(new Set(filteredDataByPrice.map(product => (product.supplier.name))))
-      const productsDropdown = Array.from(new Set(filteredDataBySupplier.map(product => (product.name))))
-      if (!suppliersDropdown.includes(this.state.filterSelections.supplier) && !productsDropdown.includes(this.state.filterSelections.product)) {
-        const supplier = 'All'
-        const product = 'All'
-        this.setState({ 
-          filterSelections: {
-            ...this.state.filterSelections,
-            supplier,
-            product
-          }
-        })
-      } else if (!suppliersDropdown.includes(this.state.filterSelections.supplier)) {
-        const supplier = 'All'
-        this.setState({ 
-          filterSelections: {
-            ...this.state.filterSelections,
-            supplier
-          }
-        })
-      } else if (!productsDropdown.includes(this.state.filterSelections.product)) {
-        const product = 'All'
-        this.setState({ 
-          filterSelections: {
-            ...this.state.filterSelections,
-            product
-          }
-        })
-      }
-      this.setState({ suppliersDropdown, productsDropdown })
+      this.managePriceInput(filteredDataByPrice)
+      // const filteredDataBySupplier = filteredDataByPrice.filter(product => (
+      //   product.supplier.name === this.state.filterSelections.supplier || this.state.filterSelections.supplier === 'All'
+      // ))
+      // const suppliersDropdown = Array.from(new Set(filteredDataByPrice.map(product => (product.supplier.name))))
+      // const productsDropdown = Array.from(new Set(filteredDataBySupplier.map(product => (product.name))))
+      // if (!suppliersDropdown.includes(this.state.filterSelections.supplier) && !productsDropdown.includes(this.state.filterSelections.product)) {
+      //   const supplier = 'All'
+      //   const product = 'All'
+      //   this.setState({ 
+      //     filterSelections: {
+      //       ...this.state.filterSelections,
+      //       supplier,
+      //       product
+      //     }
+      //   })
+      // } else if (!suppliersDropdown.includes(this.state.filterSelections.supplier)) {
+      //   const supplier = 'All'
+      //   this.setState({ 
+      //     filterSelections: {
+      //       ...this.state.filterSelections,
+      //       supplier
+      //     }
+      //   })
+      // } else if (!productsDropdown.includes(this.state.filterSelections.product)) {
+      //   const product = 'All'
+      //   this.setState({ 
+      //     filterSelections: {
+      //       ...this.state.filterSelections,
+      //       product
+      //     }
+      //   })
+      // }
+      // this.setState({ suppliersDropdown, productsDropdown })
     }
+  }
+
+  managePriceInput(data) {
+    const filteredDataBySupplier = data.filter(product => (
+      product.supplier.name === this.state.filterSelections.supplier || this.state.filterSelections.supplier === 'All'
+    ))
+    const suppliersDropdown = Array.from(new Set(data.map(product => (product.supplier.name))))
+    const productsDropdown = Array.from(new Set(filteredDataBySupplier.map(product => (product.name))))
+    if (!suppliersDropdown.includes(this.state.filterSelections.supplier) && !productsDropdown.includes(this.state.filterSelections.product)) {
+      const supplier = 'All'
+      const product = 'All'
+      this.setState({ 
+        filterSelections: {
+          ...this.state.filterSelections,
+          supplier,
+          product
+        }
+      })
+    } else if (!suppliersDropdown.includes(this.state.filterSelections.supplier)) {
+      const supplier = 'All'
+      this.setState({ 
+        filterSelections: {
+          ...this.state.filterSelections,
+          supplier
+        }
+      })
+    } else if (!productsDropdown.includes(this.state.filterSelections.product)) {
+      const product = 'All'
+      this.setState({ 
+        filterSelections: {
+          ...this.state.filterSelections,
+          product
+        }
+      })
+    }
+    this.setState({ suppliersDropdown, productsDropdown })
   }
 
   handleSubmit = e => {
