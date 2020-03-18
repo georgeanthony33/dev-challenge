@@ -44,20 +44,29 @@ class App extends React.Component {
   }
 
   filterDropdowns(filterName) {
+    const filteredDataByPrice = this.state.productData.filter(product => (
+      (product.price >= this.state.filterSelections.minPrice || this.state.filterSelections.minPrice === '') &&
+      (product.price <= this.state.filterSelections.maxPrice || this.state.filterSelections.maxPrice === '')
+    ))
     if (filterName === 'product') {
-      const filteredData = this.state.productData.filter(product => 
-        (product.name === this.state.filterSelections.product
-        || this.state.filterSelections.product === 'All')
-      )
-      const suppliersDropdown = Array.from(new Set(filteredData.map(product => (product.supplier.name))))
+      const filteredDataByProduct = filteredDataByPrice.filter(product => (
+        product.name === this.state.filterSelections.product || this.state.filterSelections.product === 'All'
+      ))
+      const suppliersDropdown = Array.from(new Set(filteredDataByProduct.map(product => (product.supplier.name))))
       this.setState({ suppliersDropdown })
     } else if (filterName === 'supplier') {
-      const filteredData = this.state.productData.filter(product => 
-        (product.supplier.name === this.state.filterSelections.supplier
-          || this.state.filterSelections.supplier === 'All')
-      )
-      const productsDropdown = Array.from(new Set(filteredData.map(product => (product.name))))
+      const filteredDataBySupplier = filteredDataByPrice.filter(product => (
+        product.supplier.name === this.state.filterSelections.supplier || this.state.filterSelections.supplier === 'All'
+      ))
+      const productsDropdown = Array.from(new Set(filteredDataBySupplier.map(product => (product.name))))
       this.setState({ productsDropdown })
+    } else if (filterName === 'minPrice' || filterName === 'maxPrice') {
+      const filteredDataBySupplier = filteredDataByPrice.filter(product => (
+        product.supplier.name === this.state.filterSelections.supplier || this.state.filterSelections.supplier === 'All'
+      ))
+      const productsDropdown = Array.from(new Set(filteredDataBySupplier.map(product => (product.name))))
+      const suppliersDropdown = Array.from(new Set(filteredDataByPrice.map(product => (product.supplier.name))))
+      this.setState({ suppliersDropdown, productsDropdown })
     }
   }
 
@@ -77,40 +86,56 @@ class App extends React.Component {
   }
 
   render() {
-    console.log(this.state.productData)
+    console.log(this.state.filterSelections.maxPrice)
     if (!this.state.productData) return null
     return (
       <div className="frontpage-container">
         <div className="title-container">
           <h1>The Wongle People</h1>
+          <h2>Choose your favourite wongle from your favourite supplier!</h2>
         </div>
         <div className="inputs-container">
+          <h2>Product pricing</h2>
           <form>
-            <select name="supplier" className="suppliers" onChange={this.handleChange}>
+            <label htmlFor="selSupplier">Supplier</label>
+            <select
+              id="selSupplier"
+              name="supplier"
+              className="suppliers"
+              onChange={this.handleChange}
+            >
               <option value="All">All</option>
               {this.state.suppliersDropdown.map(supplier => (
                 <option key={supplier} value={supplier}>{supplier}</option>
               ))}
             </select>
-            <select name="product" className="products" onChange={this.handleChange}>
+            <label htmlFor="selProduct">Product</label>
+            <select
+              id="selProduct"
+              name="product"
+              className="products"
+              onChange={this.handleChange}
+            >
               <option value="All">All</option>
               {this.state.productsDropdown.map(product => (
                 <option key={product} value={product}>{product}</option>
               ))}
             </select>
+            <label htmlFor="selMinPrice">Min Price</label>
             <input
+              id="selMinPrice"
               className="input"
               name="minPrice"
               type="number"
-              onChange={this.handleChange}
-              value={this.state.filterSelections.minPrice}
+              onBlur={this.handleChange}
             />
+            <label htmlFor="selMaxPrice">Max Price</label>
             <input
+              id="selMaxPrice"
               className="input"
               name="maxPrice"
               type="number"
-              onChange={this.handleChange}
-              value={this.state.filterSelections.maxPrice}
+              onBlur={this.handleChange}
             />
             <button onClick={this.handleSubmit}>Search</button>
           </form>
