@@ -21,6 +21,9 @@ class App extends React.Component {
     try {
       const res = await axios.get('/api/products')
       const productData = res.data
+
+      productData.sort(this.compare)
+
       const suppliersDropdown = Array.from(new Set(productData.map(product => (product.supplier.name))))
       const productsDropdown = Array.from(new Set(productData.map(product => (product.name))))
       this.setState({
@@ -32,6 +35,27 @@ class App extends React.Component {
     } catch (err) {
       console.log(err)
     }
+  }
+
+  compare = (a, b) => {
+    const supplierA = a.supplier.name.toUpperCase()
+    const supplierB = b.supplier.name.toUpperCase()
+    const priceA = a.price
+    const priceB = b.price
+  
+    let comparison = 0
+    if (supplierA > supplierB) {
+      comparison = 1
+    } else if (supplierA < supplierB) {
+      comparison = -1
+    } else {
+      if (priceA > priceB) {
+        comparison = 1
+      } else if (priceA < priceB) {
+        comparison = -1
+      }
+    }
+    return comparison
   }
 
   handleChange = e => {
